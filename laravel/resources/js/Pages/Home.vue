@@ -1,9 +1,6 @@
-<script>
+<script setup>
 import Layout from "../Layout/Layout.vue";
 
-export default {
-    components: {Layout}
-}
 </script>
 
 <template>

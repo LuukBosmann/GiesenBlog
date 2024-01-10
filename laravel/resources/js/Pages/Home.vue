@@ -1,14 +1,14 @@
 <script>
-import Layout  from "../Layout/Layout.vue";
+import Layout from "../Layout/Layout.vue";
 
 export default {
-    components: { Layout }
+    components: {Layout}
 }
 </script>
 
 <template>
     <Layout>
-        <h1>Test</h1>
+
     </Layout>
 </template>
 

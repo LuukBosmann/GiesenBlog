@@ -15,7 +15,7 @@ export default {
         </ul>
     </nav>
 
-    <main>
+    <main class="container mx-auto">
         <slot/>
     </main>
 </template>

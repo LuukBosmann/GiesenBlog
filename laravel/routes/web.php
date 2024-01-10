@@ -17,3 +17,7 @@ Route::get('/users', function () {
 Route::get('/settings', function () {
     return Inertia::render('Settings');
 });
+
+Route::get('/blogs', function () {
+    return Inertia::render('Blogs/Index');
+});

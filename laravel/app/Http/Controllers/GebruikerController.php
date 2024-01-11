@@ -103,7 +103,26 @@ class GebruikerController extends Controller
         $gebruiker->voornaam = $request->voornaam;
         $gebruiker->achternaam = $request->achternaam;
         $gebruiker->email = $request->email;
-        $gebruiker->wachtwoord = $request->wachtwoord;
+
+        $gebruiker->save();
+
+        return Inertia::location("/profiel");
+    }
+
+    public function updatePassword(Request $request, $id)
+    {
+        $request->validate([
+            'huidigWachtwoord' => 'required',
+            'nieuwWachtwoord' => 'required',
+        ]);
+
+        $gebruiker = Gebruiker::find($id);
+
+        if(!Hash::check($request->huidigWachtwoord, $gebruiker->wachtwoord)) {
+            return Inertia::location("/");
+        }
+
+        $gebruiker->wachtwoord = Hash::make($request->nieuwWachtwoord);
 
         $gebruiker->save();
 

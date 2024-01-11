@@ -1,7 +1,7 @@
 <script setup>
 import {Head, Link} from "@inertiajs/vue3";
-import Layout from "../../Layout/Layout.vue";
-import {formatDate} from "../../helperfunctions.js";
+import Layout from "@/Layout/Layout.vue";
+import {formatDate} from "@/helperfunctions.js";
 
 const props = defineProps(['user', 'profielFoto']);
 </script>

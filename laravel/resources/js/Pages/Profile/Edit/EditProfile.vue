@@ -1,7 +1,8 @@
 <script setup>
-import Layout from "../../../Layout/Layout.vue";
+import Layout from "@/Layout/Layout.vue";
 import {reactive} from "vue";
 import {Inertia} from "@inertiajs/inertia";
+import {Head} from "@inertiajs/vue3"
 
 const props = defineProps(['user']);
 

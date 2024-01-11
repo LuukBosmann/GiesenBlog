@@ -9,5 +9,5 @@ class Gebruiker extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['voornaam', 'achternaam', 'email', 'wachtwoord', 'profielFotoUrl'];
+    protected $fillable = ['voornaam', 'achternaam', 'email', 'wachtwoord', 'profielFoto'];
 }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('achternaam');
             $table->string('email');
             $table->string('wachtwoord');
-            $table->string('profielFotoUrl');
+            $table->string('profielFoto');
             $table->timestamps();
         });
     }

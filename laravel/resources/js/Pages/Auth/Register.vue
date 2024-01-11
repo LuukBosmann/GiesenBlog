@@ -9,7 +9,7 @@ let form = reactive({
     achternaam: '',
     email: '',
     wachtwoord: '',
-    profielFotoUrl: 'test'
+    profielFoto: '',
 });
 
 let submit = () => {
@@ -21,7 +21,7 @@ let submit = () => {
     <Head title="Registreer"/>
     <Layout>
         <div class="max-w-md mx-auto mt-4 text-center">
-            <h5 class="text-center font-semibold mb-6">Een nieuw account registreren</h5>
+            <h5 class="text-center font-semibold mb-6">Een nieuw profiel registreren</h5>
 
             <form @submit.prevent="submit">
                 <div class="mb-6">
@@ -57,6 +57,16 @@ let submit = () => {
                     <input v-model="form.wachtwoord" class="border border-giesenBlue rounded-3xl p-2 w-full"
                            type="password"
                            name="wachtwoord" id="wachtwoord"
+                           required>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block mb-2 text-gray-700"
+                           for="profielFoto">Profiel foto</label>
+
+                    <input @input="form.profielFoto = $event.target.files[0]" class="text-center p-2 w-full"
+                           type="file"
+                           name="profielFoto" id="profielFoto"
                            required>
                 </div>
 

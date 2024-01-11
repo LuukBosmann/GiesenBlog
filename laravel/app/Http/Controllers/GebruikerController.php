@@ -15,10 +15,12 @@ class GebruikerController extends Controller
      */
     public function index()
     {
-        $user = Gebruiker::find(4);
+        // TODO: dynamisch maken
+        $user = Gebruiker::find(2);
+
         return Inertia::render('Profile/Index', [
             'user' => $user,
-            'profielFoto' => asset("uploads/$user->profielFotoUrl")
+            'profielFoto' => asset("storage/uploads/$user->profielFoto")
         ]);
     }
 
@@ -38,19 +40,24 @@ class GebruikerController extends Controller
         $request->validate([
             'voornaam' => 'required',
             'achternaam' => 'required',
-            'email' => 'required|email',
+            'email' => 'required',
             'wachtwoord' => 'required',
-            'profielFotoUrl' => 'nullable',
+            'profielFoto' => 'required',
         ]);
 
-        $gebruiker = new Gebruiker();
-        $gebruiker->voornaam = $request->voornaam;
-        $gebruiker->achternaam = $request->achternaam;
-        $gebruiker->email = $request->email;
-        $gebruiker->wachtwoord = Hash::make($request->wachtwoord);
-        $gebruiker->profielFotoUrl = $request->profielFotoUrl;
+        $file = $request->file('profielFoto');
 
-        $gebruiker->save();
+        $filename = uniqid() . '_' . $file->getClientOriginalName();
+
+        $file->storeAs('uploads', $filename, 'public');
+
+        Gebruiker::create([
+            'voornaam' => $request->voornaam,
+            'achternaam' => $request->achternaam,
+            'email' => $request->email,
+            'wachtwoord' => Hash::make($request->wachtwoord),
+            'profielFoto' => $filename
+        ]);
 
         return Inertia::location("/");
     }
@@ -83,19 +90,24 @@ class GebruikerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Gebruiker $gebruiker)
+    public function update(Request $request, $id)
     {
-        $image_path = '';
-
-        if($request->hasFile('image')) {
-            $image_path = $request->file('image')->store('image', 'public');
-        }
-
-        $data = Gebruiker::create([
-            'image' => $image_path,
+        $request->validate([
+            'voornaam' => 'required',
+            'achternaam' => 'required',
+            'email' => 'required',
         ]);
 
-        return Inertia::location("/profile");
+        $gebruiker = Gebruiker::find($id);
+
+        $gebruiker->voornaam = $request->voornaam;
+        $gebruiker->achternaam = $request->achternaam;
+        $gebruiker->email = $request->email;
+        $gebruiker->wachtwoord = $request->wachtwoord;
+
+        $gebruiker->save();
+
+        return Inertia::location("/profiel");
     }
 
     /**

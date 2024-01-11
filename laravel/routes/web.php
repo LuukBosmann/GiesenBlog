@@ -33,4 +33,4 @@ Route::get("/profiel", [GebruikerController::class, 'index']);
 Route::get("/profielwijzigen/{gebruikersId}", [GebruikerController::class, 'edit']);
 Route::get("/wachtwoordwijzigen/{gebruikersId}", [GebruikerController::class, 'editPassword']);
 
-Route::patch("/wijzigProfiel", [GebruikerController::class, "update"]);
+Route::patch("/wijzigProfiel/{id}", [GebruikerController::class, "update"]);

@@ -33,12 +33,12 @@ const props = defineProps(['user', 'profielFoto']);
                     <span>{{ formatDate(props.user['updated_at']) }}</span>
                 </div>
                 <div class="mt-8 flex flex-col gap-4">
-                    <Link :href="'/profielwijzigen/' + props.user['id']"
+                    <Link href="/profielwijzigen"
                           class="bg-giesenDarkBlue rounded py-1.5 hover:bg-giesenBlack text-center shadow-md">
                         Profiel wijzigen
                     </Link>
                     <Link class="bg-giesenDarkBlue rounded py-1.5 hover:bg-giesenBlack text-center shadow-md"
-                          :href="'/wachtwoordwijzigen/' + props.user['id']">
+                          href="/wachtwoordwijzigen">
                         Wachtwoord wijzigen
                     </Link>
                 </div>

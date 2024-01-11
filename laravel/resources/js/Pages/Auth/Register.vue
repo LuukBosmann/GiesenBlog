@@ -8,7 +8,7 @@ let form = reactive({
     voornaam: '',
     achternaam: '',
     email: '',
-    wachtwoord: '',
+    password: '',
     profielFoto: '',
 });
 
@@ -54,7 +54,7 @@ let submit = () => {
                     <label class="block mb-2 text-gray-700"
                            for="wachtwoord">Wachtwoord</label>
 
-                    <input v-model="form.wachtwoord" class="border border-giesenBlue rounded-3xl p-2 w-full"
+                    <input v-model="form.password" class="border border-giesenBlue rounded-3xl p-2 w-full"
                            type="password"
                            name="wachtwoord" id="wachtwoord"
                            required>

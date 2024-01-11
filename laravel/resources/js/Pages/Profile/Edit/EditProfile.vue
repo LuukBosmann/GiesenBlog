@@ -1,15 +1,13 @@
 <script setup>
 import Layout from "@/Layout/Layout.vue";
-import {reactive} from "vue";
-import {Inertia} from "@inertiajs/inertia";
-import {Head} from "@inertiajs/vue3"
+import {Head, useForm} from "@inertiajs/vue3"
 
 const props = defineProps(['user']);
 
-let form = reactive(props.user);
+let form = useForm(props.user);
 
 let submit = () => {
-    Inertia.patch(`/wijzigProfiel/${props.user['id']}`, form);
+    form.patch(`/profielwijzigen`);
 };
 </script>
 

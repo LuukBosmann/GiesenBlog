@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Gebruiker;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -15,8 +16,7 @@ class GebruikerController extends Controller
      */
     public function index()
     {
-        // TODO: dynamisch maken
-        $user = Gebruiker::find(2);
+        $user = User::find(Auth::user()->id);
 
         return Inertia::render('Profile/Index', [
             'user' => $user,
@@ -41,7 +41,7 @@ class GebruikerController extends Controller
             'voornaam' => 'required',
             'achternaam' => 'required',
             'email' => 'required',
-            'wachtwoord' => 'required',
+            'password' => 'required',
             'profielFoto' => 'required',
         ]);
 
@@ -51,11 +51,13 @@ class GebruikerController extends Controller
 
         $file->storeAs('uploads', $filename, 'public');
 
-        Gebruiker::create([
+        User::create([
             'voornaam' => $request->voornaam,
             'achternaam' => $request->achternaam,
             'email' => $request->email,
-            'wachtwoord' => Hash::make($request->wachtwoord),
+            'password' => Hash::make($request->password, [
+                'rounds' => 12
+            ]),
             'profielFoto' => $filename
         ]);
 
@@ -65,7 +67,7 @@ class GebruikerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Gebruiker $gebruiker)
+    public function show(User $gebruiker)
     {
         //
     }
@@ -73,24 +75,24 @@ class GebruikerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($gebruikersId): Response
+    public function edit(): Response
     {
         return Inertia::render('Profile/Edit/EditProfile', [
-            'user' => Gebruiker::find($gebruikersId),
+            'user' => User::find(Auth::user()->id),
         ]);
     }
 
-    public function editPassword($gebruikersId): Response
+    public function editPassword(): Response
     {
         return Inertia::render('Profile/Edit/EditPassword', [
-            'user' => Gebruiker::find($gebruikersId),
+            'user' => User::find(Auth::user()->id),
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $request->validate([
             'voornaam' => 'required',
@@ -98,7 +100,7 @@ class GebruikerController extends Controller
             'email' => 'required',
         ]);
 
-        $gebruiker = Gebruiker::find($id);
+        $gebruiker = User::find(Auth::user()->id);
 
         $gebruiker->voornaam = $request->voornaam;
         $gebruiker->achternaam = $request->achternaam;
@@ -109,20 +111,20 @@ class GebruikerController extends Controller
         return Inertia::location("/profiel");
     }
 
-    public function updatePassword(Request $request, $id)
+    public function updatePassword(Request $request)
     {
         $request->validate([
             'huidigWachtwoord' => 'required',
             'nieuwWachtwoord' => 'required',
         ]);
 
-        $gebruiker = Gebruiker::find($id);
+        $gebruiker = User::find(Auth::user()->id);
 
-        if(!Hash::check($request->huidigWachtwoord, $gebruiker->wachtwoord)) {
+        if (!Hash::check($request->huidigWachtwoord, $gebruiker->password, ["rounds" => 12])) {
             return Inertia::location("/");
         }
 
-        $gebruiker->wachtwoord = Hash::make($request->nieuwWachtwoord);
+        $gebruiker->password = Hash::make($request->nieuwWachtwoord);
 
         $gebruiker->save();
 
@@ -132,7 +134,7 @@ class GebruikerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Gebruiker $gebruiker)
+    public function destroy(User $gebruiker)
     {
         //
     }

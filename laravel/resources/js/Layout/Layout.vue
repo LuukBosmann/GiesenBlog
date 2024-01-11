@@ -11,6 +11,7 @@ export default {
         <ul>
             <li><Link href="/">Home</Link></li>
             <li><Link href="/profiel">Profiel</Link></li>
+            <li><Link href="/logout" method="post">Uitloggen</Link></li>
         </ul>
     </nav>
 

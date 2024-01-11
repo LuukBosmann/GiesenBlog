@@ -1,12 +1,10 @@
 <script setup>
-import {Head} from "@inertiajs/vue3"
+import {Head, useForm} from "@inertiajs/vue3"
 import Layout from "@/Layout/Layout.vue";
-import {reactive} from "vue";
-import {Inertia} from "@inertiajs/inertia";
 
 let props = defineProps(['user'])
 
-let form = reactive({
+let form = useForm({
     huidigWachtwoord: '',
     nieuwWachtwoord: ''
 });
@@ -17,7 +15,7 @@ let submit = () => {
         return;
     }
 
-    Inertia.patch(`/wijzigWachtwoord/${props.user['id']}`, form);
+    form.patch(`/wachtwoordwijzigen`);
 };
 
 let validator;

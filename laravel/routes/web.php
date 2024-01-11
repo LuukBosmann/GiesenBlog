@@ -1,17 +1,11 @@
 <?php
 
 use App\Http\Controllers\GebruikerController;
-use App\Models\Gebruiker;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('Home');
-});
-
-Route::get('/users', function () {
-    return Inertia::render('Users');
 });
 
 Route::get('/login', function () {
@@ -33,4 +27,10 @@ Route::get('/registreer', function () {
     return Inertia::render('Auth/Register');
 });
 
-Route::post('registreer', [GebruikerController::class, 'store'])->name('registreer');
+Route::post('registreer', [GebruikerController::class, 'store']);
+
+Route::get("/profiel", [GebruikerController::class, 'index']);
+Route::get("/profielwijzigen/{gebruikersId}", [GebruikerController::class, 'edit']);
+Route::get("/wachtwoordwijzigen/{gebruikersId}", [GebruikerController::class, 'editPassword']);
+
+Route::patch("/wijzigProfiel", [GebruikerController::class, "update"]);

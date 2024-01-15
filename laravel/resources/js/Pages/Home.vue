@@ -5,10 +5,7 @@ import Layout from "../Layout/Layout.vue";
 
 <template>
     <Layout>
-
     </Layout>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Gebruiker;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class GebruikerController extends Controller
 {
@@ -14,7 +16,12 @@ class GebruikerController extends Controller
      */
     public function index()
     {
+        $user = User::find(Auth::user()->id);
 
+        return Inertia::render('Profile/Index', [
+            'user' => $user,
+            'profielFoto' => asset("storage/uploads/$user->profielFoto")
+        ]);
     }
 
     /**
@@ -30,22 +37,29 @@ class GebruikerController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'voornaam' => 'required',
             'achternaam' => 'required',
-            'email' => 'required|email',
-            'wachtwoord' => 'required',
-            'profielFotoUrl' => 'nullable',
+            'email' => 'required',
+            'password' => 'required',
+            'profielFoto' => 'required',
         ]);
 
-        $gebruiker = new Gebruiker();
-        $gebruiker->voornaam = $request->voornaam;
-        $gebruiker->achternaam = $request->achternaam;
-        $gebruiker->email = $request->email;
-        $gebruiker->wachtwoord = Hash::make($request->wachtwoord);
-        $gebruiker->profielFotoUrl = $request->profielFotoUrl;
+        $file = $request->file('profielFoto');
 
-        $gebruiker->save();
+        $filename = uniqid() . '_' . $file->getClientOriginalName();
+
+        $file->storeAs('uploads', $filename, 'public');
+
+        User::create([
+            'voornaam' => $request->voornaam,
+            'achternaam' => $request->achternaam,
+            'email' => $request->email,
+            'password' => Hash::make($request->password, [
+                'rounds' => 12
+            ]),
+            'profielFoto' => $filename
+        ]);
 
         return Inertia::location("/");
     }
@@ -53,7 +67,7 @@ class GebruikerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Gebruiker $gebruiker)
+    public function show(User $gebruiker)
     {
         //
     }
@@ -61,23 +75,66 @@ class GebruikerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Gebruiker $gebruiker)
+    public function edit(): Response
     {
-        //
+        return Inertia::render('Profile/Edit/EditProfile', [
+            'user' => User::find(Auth::user()->id),
+        ]);
+    }
+
+    public function editPassword(): Response
+    {
+        return Inertia::render('Profile/Edit/EditPassword', [
+            'user' => User::find(Auth::user()->id),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Gebruiker $gebruiker)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'voornaam' => 'required',
+            'achternaam' => 'required',
+            'email' => 'required',
+        ]);
+
+        $gebruiker = User::find(Auth::user()->id);
+
+        $gebruiker->voornaam = $request->voornaam;
+        $gebruiker->achternaam = $request->achternaam;
+        $gebruiker->email = $request->email;
+
+        $gebruiker->save();
+
+        return Inertia::location("/profiel");
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'huidigWachtwoord' => 'required',
+            'nieuwWachtwoord' => 'required',
+        ]);
+
+        $gebruiker = User::find(Auth::user()->id);
+
+        if (!Hash::check($request->huidigWachtwoord, $gebruiker->password, ["rounds" => 12])) {
+            return Inertia::location("/");
+        }
+
+        $gebruiker->password = Hash::make($request->nieuwWachtwoord);
+
+        $gebruiker->save();
+
+        return Inertia::location("/profiel");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Gebruiker $gebruiker)
+    public function destroy(User $gebruiker)
     {
         //
     }

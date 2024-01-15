@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
-            $table->integer('gebruikersId');
-            $table->string('titel');
-            $table->string('inhoud');
-            $table->timestamp('aangemaakt');
+            $table->integer('gebruikersId')->default(5);
+            $table->string('titel')->default('Geen titel');
+            $table->text('inhoud')->default('Geen inhoud');
+            $table->timestamp('aangemaakt')->default(now());
         });
     }
 

@@ -1,5 +1,5 @@
 <script setup>
-import {Link, Head, useForm} from "@inertiajs/vue3"
+import {Link, Head, useForm} from "@inertiajs/vue3";
 
 const props = defineProps(['errors'])
 

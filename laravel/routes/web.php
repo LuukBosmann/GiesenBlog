@@ -35,3 +35,5 @@ Route::get('/blogs/{blog}/edit', [BlogsController::class, 'edit'])->name('blogs.
 Route::post('/blogs/{blog}/edit', [BlogsController::class, 'update'])->name('blogs.update');
 Route::get('/blogs/create', [BlogsController::class, 'create'])->name('blogs.create');
 Route::get('/blogs/{blog}', [BlogsController::class, 'show'])->name('blogs.show');
+
+Route::get("/getUser/{gebruikersId}", [BlogsController::class, 'getUser']);

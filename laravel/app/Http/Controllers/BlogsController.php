@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blogs;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -37,10 +38,13 @@ class BlogsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(blogs $blogs)
+    public function show($id)
     {
+        $blog = Blogs::findorFail($id);
+
         return Inertia::render('Blogs/Show', [
-            'blog' => $blogs,
+            'blog' => $blog,
+            'user' => User::find($blog->gebruikersId)
         ]);
     }
 
@@ -81,5 +85,10 @@ class BlogsController extends Controller
     public function destroy(blogs $blogs)
     {
         //
+    }
+
+    public function getUser($gebruikersId)
+    {
+        return User::find($gebruikersId);
     }
 }

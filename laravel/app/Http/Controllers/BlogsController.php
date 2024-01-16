@@ -25,7 +25,7 @@ class BlogsController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Blogs/Create');
     }
 
     /**
@@ -41,7 +41,9 @@ class BlogsController extends Controller
      */
     public function show(blogs $blogs)
     {
-        //
+        return Inertia::render('Blogs/Show', [
+            'blog' => $blogs,
+        ]);
     }
 
     /**

@@ -1,10 +1,13 @@
 <script setup>
 import {Head, Link, useForm} from '@inertiajs/vue3';
 import {formatDate} from "@/helperfunctions.js";
+import {Icon} from "@iconify/vue";
+import {findUser} from "@/helperfunctions.js";
 
-const props = defineProps(['blog', 'user', 'logged_in', 'comments', 'user_name_comment']);
+const props = defineProps(['blog', 'user', 'users', 'comments']);
 
 let user = props.user;
+let users = props.users;
 
 const form = useForm({
     content: null,
@@ -59,21 +62,22 @@ function storeComment() {
                     <div class="flex flex-col w-4/6">
                         <div v-for="comment in comments" :key="comment.id" class="flex flex-col w-full">
                             <div class="flex flex-col w-full border shadow rounded my-2">
-                                <p class="ml-4 mt-3 text-indigo-500"> {{ comment.user_name_comment }} </p>
-                                <p class="ml-4 mt-3 leading-relaxed mb-5"> {{ comment.content }} </p>
-                                <div class="flex justify-between">
-                                    <p class="ml-4 text-xs text-gray-500 leading-relaxed mb-5">posted on
-                                        {{ comment.created_at.slice(0, 10) }} </p>
-                                    <div v-if="comment.user_id === logged_in">
-                                        <Link :href="`/comment/${comment.id}`" method="delete" type="button"
-                                              class="text-lg mr-4">
-                                            <!--                                            <font-awesome-icon icon="fa-solid fa-trash"-->
-                                            <!--                                                               style="color: rgb(129 140 248)"/>-->
+                                <div class="border-b-[1px]">
+                                    <p class="ml-4 my-1 font-semibold">
+                                        {{ findUser(users, comment.gebruikerId).voornaam }}
+                                        {{ findUser(users, comment.gebruikerId).achternaam }} </p>
+                                </div>
+                                <p class="mx-4 mt-3 leading-relaxed mb-5"> {{ comment.inhoud }} </p>
+                                <div class="flex justify-between border-t-[1px] py-1">
+                                    <p class="ml-4 text-sm leading-relaxed">
+                                        Geplaatst op: {{ formatDate(comment.created_at) }}
+                                    </p>
+                                    <div v-if="comment.user_id === logged_in" class="flex">
+                                        <Link :href="`/comment/${comment.id}`" method="delete" class="text-lg mr-4">
+                                            <Icon icon="mdi:trash"/>
                                         </Link>
-                                        <Link :href="`/comment/${comment.id}/edit`" type="button"
-                                              class="text-lg mr-4">
-                                            <!--                                            <font-awesome-icon icon="fa-solid fa-pen-to-square"-->
-                                            <!--                                                               style="color: rgb(129 140 248)"/>-->
+                                        <Link :href="`/comment/${comment.id}/edit`" class="text-lg mr-4">
+                                            <Icon icon="mdi:edit"/>
                                         </Link>
                                     </div>
                                 </div>

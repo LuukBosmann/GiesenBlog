@@ -11,3 +11,7 @@ export const formatDate = (date) => {
 export const truncateText = (text, maxLength) => {
     return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
 }
+
+export const findUser = (users, userId) => {
+    return users.find(user => user.id === userId);
+}

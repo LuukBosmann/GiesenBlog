@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blogs;
+use App\Models\Reacties;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -16,6 +17,7 @@ class BlogsController extends Controller
     {
         return Inertia::render('Blogs/Index', [
             'blogs' => Blogs::all(),
+            'users' => User::all(),
         ]);
     }
 
@@ -44,7 +46,9 @@ class BlogsController extends Controller
 
         return Inertia::render('Blogs/Show', [
             'blog' => $blog,
-            'user' => User::find($blog->gebruikersId)
+            'user' => User::find($blog->gebruikersId),
+            'users' => User::all(),
+            'comments' => Reacties::where('blogId', $blog->id)->get()
         ]);
     }
 
@@ -82,7 +86,7 @@ class BlogsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(blogs $blogs)
+    public function destroy(Blogs $blogs)
     {
         //
     }

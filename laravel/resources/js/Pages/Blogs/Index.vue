@@ -1,27 +1,15 @@
 <script setup>
 import {Head, Link} from '@inertiajs/vue3';
-import axios from "axios";
-import {computed, onMounted, ref} from "vue";
-import {truncateText} from "@/helperfunctions.js";
+import {truncateText, findUser} from "@/helperfunctions.js";
 
-const props = defineProps(['blogs']);
+const props = defineProps(['blogs', 'users']);
 
-const blogs = ref([]);
-
-const sortedBlogs = computed(() => {
-    return blogs.value.slice().sort((a, b) =>
+const sortedBlogs = () => {
+    return props.blogs.slice().sort((a, b) =>
         new Date(a.aangemaakt) - new Date(b.aangemaakt)
     );
-});
+};
 
-onMounted(async () => {
-    blogs.value = await Promise.all(
-        props.blogs.map(async (blog) => {
-            const gebruiker = (await axios.get(`/getUser/${blog.gebruikersId}`)).data;
-            return {...blog, gebruiker};
-        })
-    );
-});
 </script>
 
 <template>
@@ -33,7 +21,7 @@ onMounted(async () => {
         </div>
 
         <div class="flex flex-wrap -mx-4">
-            <div v-for="blog in sortedBlogs" :key="blog.id" class="mb-6 w-1/2 px-4">
+            <div v-for="blog in sortedBlogs()" :key="blog.id" class="mb-6 w-1/2 px-4">
                 <div class="container mx-auto">
                     <div class="flex">
                         <div class="p-3">
@@ -42,13 +30,13 @@ onMounted(async () => {
                                     <div class="flex-shrink pr-2">
                                         <div class="rounded-full p-2 bg-gray-800">
                                             <img class="h-20 w-auto rounded"
-                                                 :src="`/storage/uploads/${blog.gebruiker.profielFoto}`"
+                                                 :src="`/storage/uploads/${findUser(blog.gebruikersId).profielFoto}`"
                                                  alt="ProfielFoto"/>
                                         </div>
                                     </div>
                                     <div class="flex-1 text-giesenWhite-300">
-                                        <p class="font-semibold text-lg text-giesenDarkBlue">
-                                            {{ blog.gebruiker.voornaam }} {{ blog.gebruiker.achternaam }}
+                                        <p class="font-semibold text-md text-giesenDarkBlue">
+                                            {{ findUser(blog.gebruikersId).voornaam }} {{ findUser(blog.gebruikersId).achternaam }}
                                         </p>
                                         <p class="text-gray-400 text-xs">{{ blog.aangemaakt }}</p>
                                         <h2 class="text-xl font-semibold mb-2 text-giesenDarkBlue">{{ blog.titel }}</h2>
@@ -57,6 +45,12 @@ onMounted(async () => {
 
                                 <div class="mt-2 p-2">
                                     <p class="text-giesenBlack mb-4">{{ truncateText(blog.inhoud, 250) }}</p>
+                                </div>
+
+                                <div class="mt-2 p-2">
+                                    <Link :href="`/blogs/${blog.id}`" class="bg-giesenBlue text-giesenWhite-400 rounded-2xl py-2 px-4 hover:bg-giesenDarkBlue">
+                                        Lees meer...
+                                    </Link>
                                 </div>
                             </div>
                         </div>

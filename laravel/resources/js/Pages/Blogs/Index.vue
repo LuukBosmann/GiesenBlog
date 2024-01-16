@@ -30,13 +30,13 @@ const sortedBlogs = () => {
                                     <div class="flex-shrink pr-2">
                                         <div class="rounded-full p-2 bg-gray-800">
                                             <img class="h-20 w-auto rounded"
-                                                 :src="`/storage/uploads/${findUser(blog.gebruikersId).profielFoto}`"
+                                                 :src="`/storage/uploads/${findUser(props.users, blog.gebruikersId).profielFoto}`"
                                                  alt="ProfielFoto"/>
                                         </div>
                                     </div>
                                     <div class="flex-1 text-giesenWhite-300">
                                         <p class="font-semibold text-md text-giesenDarkBlue">
-                                            {{ findUser(blog.gebruikersId).voornaam }} {{ findUser(blog.gebruikersId).achternaam }}
+                                            {{ findUser(props.users, blog.gebruikersId).voornaam }} {{ findUser(props.users, blog.gebruikersId).achternaam }}
                                         </p>
                                         <p class="text-gray-400 text-xs">{{ blog.aangemaakt }}</p>
                                         <h2 class="text-xl font-semibold mb-2 text-giesenDarkBlue">{{ blog.titel }}</h2>

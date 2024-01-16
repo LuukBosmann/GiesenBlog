@@ -1,8 +1,7 @@
 <script setup>
 import {Head, Link, useForm} from '@inertiajs/vue3';
-import {formatDate} from "@/helperfunctions.js";
+import {formatDate, findUser} from "@/helperfunctions.js";
 import {Icon} from "@iconify/vue";
-import {findUser} from "@/helperfunctions.js";
 
 const props = defineProps(['blog', 'user', 'users', 'comments']);
 

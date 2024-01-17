@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Blogs;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class BlogsController extends Controller
@@ -23,33 +24,35 @@ class BlogsController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Blogs/Create');
+        return Inertia::render('Blogs/Create', [
+            'user' => Auth::user()
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    // Validate the incoming request data
-    $request->validate([
-        'titel' => 'required',
-        'inhoud' => 'required',
-        'gebruikersId' => 'required',
-    ]);
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'titel' => 'required',
+            'inhoud' => 'required',
+            'gebruikersId' => 'required',
+        ]);
 
-    // Create a new Blogs entry using the form data
-    Blogs::create([
-        'titel' => $request->input('titel'),
-        'inhoud' => $request->input('inhoud'),
-        'gebruikersId' => $request->input('gebruikersId'),
-    ]);
+        // Create a new Blogs entry using the form data
+        Blogs::create([
+            'titel' => $request->titel,
+            'inhoud' => $request->inhoud,
+            'gebruikersId' => $request->gebruikersId,
+        ]);
 
-    // Render the view with the updated list of blogs
-    return Inertia::render('Blogs/Index', [
-        'blogs' => Blogs::all(),
-    ]);
-}
+        // Render the view with the updated list of blogs
+        return Inertia::render('Blogs/Index', [
+            'blogs' => Blogs::all(),
+        ]);
+    }
 
     /**
      * Display the specified resource.

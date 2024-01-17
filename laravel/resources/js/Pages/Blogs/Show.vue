@@ -72,8 +72,9 @@ function storeComment() {
                                         <p>Geplaatst op: {{ formatDate(comment.created_at) }}</p>
                                         <p>Bijgewerkt: {{ formatDate(comment.updated_at) }}</p>
                                     </div>
-                                    <div v-if="props.loggedInUserId && comment.gebruikersId === props.loggedInUserId" class="flex">
-                                        <Link :href="`/comment/${comment.id}`" method="delete" class="text-lg mr-4" as="button">
+                                    <div v-if="props.loggedInUserId && comment.gebruikersId === props.loggedInUserId"
+                                         class="flex">
+                                        <Link :href="`/deleteComment/${comment.id}`" method="delete" class="text-lg mr-4" as="button">
                                             <Icon icon="mdi:trash"/>
                                         </Link>
                                         <Link :href="`/comment/${comment.id}/edit`" class="text-lg mr-4" as="button">

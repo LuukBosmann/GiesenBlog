@@ -24,6 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::patch("/wachtwoordwijzigen", [GebruikerController::class, 'updatePassword']);
 
     Route::post("/comment", [ReactieController::class, 'store']);
+    Route::delete("/deleteComment/{id}", [ReactieController::class, 'destroy']);
 });
 
 Route::get('/blogs', [BlogsController::class, 'index'])->name('blogs.index');

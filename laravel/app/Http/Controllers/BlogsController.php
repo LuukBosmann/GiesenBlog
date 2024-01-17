@@ -17,7 +17,7 @@ class BlogsController extends Controller
     {
         return Inertia::render('Blogs/Index', [
             'blogs' => Blogs::all(),
-            'users' => User::all(),
+            'users' => User::whereIn('id', Blogs::pluck('gebruikersId'))->get(),
         ]);
     }
 
@@ -48,7 +48,7 @@ class BlogsController extends Controller
             'blog' => $blog,
             'user' => User::find($blog->gebruikersId),
             'users' => User::all(),
-            'comments' => Reacties::where('blogId', $blog->id)->get()
+            'comments' => Reacties::where('blogId', $blog->id)->get(),
         ]);
     }
 
@@ -57,10 +57,8 @@ class BlogsController extends Controller
      */
     public function edit($id)
     {
-        $blog = Blogs::findOrFail($id);
-
         return Inertia::render('Blogs/Edit', [
-            'blog' => $blog,
+            'blog' => Blogs::findOrFail($id),
         ]);
     }
 
@@ -80,7 +78,6 @@ class BlogsController extends Controller
         ]);
 
         return Inertia::location("/blogs");
-
     }
 
     /**

@@ -1,12 +1,16 @@
 <script setup>
-import {Head, Link, useForm} from '@inertiajs/vue3';
-import {formatDate, findUser} from "@/helperfunctions.js";
+import {Head, Link, useForm, usePage} from '@inertiajs/vue3';
+import {formatDate, findUser, truncateText} from "@/helperfunctions.js";
 import {Icon} from "@iconify/vue";
+import {computed} from "vue";
 
 const props = defineProps(['blog', 'user', 'users', 'comments']);
 
 let user = props.user;
 let users = props.users;
+
+const page = usePage();
+const loggedInUser = computed(() => page.props.auth.user);
 
 const form = useForm({
     content: null,
@@ -19,14 +23,14 @@ function storeComment() {
 </script>
 
 <template>
-    <Head :title="`Blogs | ${props.blog.titel}`"/>
+    <Head :title="`Blogs | ${truncateText(props.blog.titel, 25)}`"/>
     <div class="pb-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="flex m-2 p-2">
                 <Link href="/blogs" class="px-4 py-2 bg-indigo-500 hover:bg-indico-600 text-white rounded">Back</Link>
             </div>
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg mb-5">
-                <div class="mt-3" v-if="props.blog.user_id === logged_in">
+                <div class="mt-3" v-if="loggedInUser && props.blog.gebruikersId === loggedInUser.id">
                     <Link :href="`/blogs/${props.blog.id}`" method="delete" type="button"
                           class=" float-right mr-3 inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700  sm:ml-3 sm:w-auto sm:text-sm">
                         Delete
@@ -63,15 +67,15 @@ function storeComment() {
                             <div class="flex flex-col w-full border shadow rounded my-2">
                                 <div class="border-b-[1px]">
                                     <p class="ml-4 my-1 font-semibold">
-                                        {{ findUser(users, comment.gebruikerId).voornaam }}
-                                        {{ findUser(users, comment.gebruikerId).achternaam }} </p>
+                                        {{ findUser(users, comment.gebruikersId).voornaam }}
+                                        {{ findUser(users, comment.gebruikersId).achternaam }} </p>
                                 </div>
                                 <p class="mx-4 mt-3 leading-relaxed mb-5"> {{ comment.inhoud }} </p>
                                 <div class="flex justify-between border-t-[1px] py-1">
                                     <p class="ml-4 text-sm leading-relaxed">
                                         Geplaatst op: {{ formatDate(comment.created_at) }}
                                     </p>
-                                    <div v-if="comment.user_id === logged_in" class="flex">
+                                    <div v-if="loggedInUser && comment.gebruikersId === loggedInUser.id" class="flex">
                                         <Link :href="`/comment/${comment.id}`" method="delete" class="text-lg mr-4">
                                             <Icon icon="mdi:trash"/>
                                         </Link>

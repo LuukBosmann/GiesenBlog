@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('reacties', function (Blueprint $table) {
             $table->id();
             $table->integer('blogId');
-            $table->integer('gebruikerId');
+            $table->integer('gebruikersId');
             $table->text('inhoud');
             $table->timestamps();
         });

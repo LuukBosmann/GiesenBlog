@@ -11,7 +11,7 @@ class Reacties extends Model
 
     protected $fillable = [
         'blogId',
-        'gebruikerId',
+        'gebruikersId',
         'inhoud',
     ];
 }

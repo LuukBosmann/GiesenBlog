@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Reacties;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ReactieController extends Controller
 {
@@ -29,7 +29,19 @@ class ReactieController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'inhoud' => 'required|string',
+            'blogId' => 'required|integer',
+            'gebruikersId' => 'required|integer',
+        ]);
+
+        Reacties::create([
+            'inhoud' => $request->inhoud,
+            'blogId' => $request->blogId,
+            'gebruikersId' => $request->gebruikersId,
+        ]);
+
+        return Inertia::location("/blogs/$request->blogId");
     }
 
     /**

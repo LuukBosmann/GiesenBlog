@@ -6,6 +6,7 @@ use App\Models\Blogs;
 use App\Models\Reacties;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class BlogsController extends Controller
@@ -49,6 +50,7 @@ class BlogsController extends Controller
             'user' => User::find($blog->gebruikersId),
             'users' => User::all(),
             'comments' => Reacties::where('blogId', $blog->id)->get(),
+            'loggedInUserId' => Auth::user()->id
         ]);
     }
 

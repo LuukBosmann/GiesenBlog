@@ -1,19 +1,10 @@
-<script>
-import {Link} from "@inertiajs/vue3";
+<script setup>
+import Header from "@/Layout/Header.vue";
 
-export default {
-    components: {Link}
-}
 </script>
 
 <template>
-    <nav>
-        <ul>
-            <li><Link href="/">Home</Link></li>
-            <li><Link href="/profiel">Profiel</Link></li>
-            <li><Link href="/logout" method="post">Uitloggen</Link></li>
-        </ul>
-    </nav>
+    <Header/>
 
     <main class="container mx-auto">
         <slot/>

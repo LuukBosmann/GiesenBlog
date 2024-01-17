@@ -1,11 +1,12 @@
 <script setup>
-import {Link, Head, useForm} from "@inertiajs/vue3"
+import {Link, Head, useForm} from "@inertiajs/vue3";
 
 const props = defineProps(['errors'])
 
 let form = useForm({
     email: '',
-    password: ''
+    password: '',
+    remember: false
 });
 
 let submit = () => {
@@ -23,21 +24,25 @@ let submit = () => {
                 <label class="block mb-2 giesenWhite-400" for="email">Email</label>
 
                 <input v-model="form.email" class="border border-giesenBlue rounded-3xl p-2 w-full" type="email"
-                       name="email"
-                       id="email" required>
+                       name="email" id="email" required>
                 <div class="text-red-600" v-if="errors.email">
                     {{ errors.email }}
                 </div>
             </div>
 
             <div class="mb-5">
-                <label class="block mb-2 text-gray-700"
-                       for="password">Wachtwoord</label>
+                <label class="block mb-2 text-gray-700" for="password">Wachtwoord</label>
 
                 <input v-model="form.password" class="border border-giesenBlue rounded-3xl p-2 w-full"
-                       type="password"
-                       name="password" id="password"
+                       type="password" name="password" id="password"
                        required>
+            </div>
+
+            <div class="mb-5">
+                <label class="block mb-2 text-gray-700" for="remember">Onthoud mij</label>
+
+                <input v-model="form.remember" class="border border-giesenBlue rounded-3xl p-2 w-full"
+                       type="checkbox" name="remember" id="remember">
             </div>
 
             <div class="mb-6">

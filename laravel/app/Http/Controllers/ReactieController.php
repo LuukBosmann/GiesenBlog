@@ -57,15 +57,26 @@ class ReactieController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return Inertia::render('Blogs/Comments/EditComment', [
+            'comment' => Reacties::findOrFail($id),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'id' => 'required|integer',
+            'inhoud' => 'required|string',
+        ]);
+
+        $reactie = Reacties::find($request->id);
+        $reactie->inhoud = $request->inhoud;
+        $reactie->save();
+
+        return Inertia::location("/blogs/$reactie->blogId");
     }
 
     /**

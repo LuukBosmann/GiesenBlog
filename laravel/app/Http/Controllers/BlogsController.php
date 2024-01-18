@@ -50,7 +50,7 @@ class BlogsController extends Controller
             'user' => User::find($blog->gebruikersId),
             'users' => User::all(),
             'comments' => Reacties::where('blogId', $blog->id)->get(),
-            'loggedInUserId' => Auth::user()->id
+            'loggedInUserId' => Auth::user() ? Auth::user()->id : null
         ]);
     }
 

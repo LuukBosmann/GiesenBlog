@@ -37,12 +37,12 @@ function storeComment() {
                         </div>
                         <div v-if="props.loggedInUserId && comment.gebruikersId === props.loggedInUserId"
                              class="flex">
+                            <Link :href="`/reactieBewerken/${comment.id}`" class="text-lg mr-2 pt-[0.7rem]">
+                                <Icon icon="mdi:edit"/>
+                            </Link>
                             <Link :href="`/deleteComment/${comment.id}`" method="delete" class="text-lg mr-4"
                                   as="button">
                                 <Icon icon="mdi:trash"/>
-                            </Link>
-                            <Link :href="`/reactieBewerken/${comment.id}`" class="text-lg mr-4">
-                                <Icon icon="mdi:edit"/>
                             </Link>
                         </div>
                     </div>

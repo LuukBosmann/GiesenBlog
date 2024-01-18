@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Reacties;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class ReactieController extends Controller
@@ -85,5 +86,13 @@ class ReactieController extends Controller
     public function destroy($id)
     {
         Reacties::destroy($id);
+    }
+
+    public function myComments()
+    {
+        return Inertia::render("Profile/MijnReacties", [
+            'comments' => Reacties::where('gebruikersId', Auth::user() ? Auth::user()->id : null)->get(),
+            'user' => Auth::user() ? Auth::user() : null
+        ]);
     }
 }

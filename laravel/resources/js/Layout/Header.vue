@@ -42,7 +42,7 @@ const user = computed(() => page.props.auth.user);
                      class="absolute bg-giesenWhite-100 -right-5 z-10 top-[4.5rem] w-56 rounded shadow-lg border border-giesenBlue">
                     <Link href="/profiel" class="block px-4 py-2 hover:bg-giesenWhite-400 rounded-t">Profiel</Link>
                     <Link href="/blogs" class="block px-4 py-2 hover:bg-giesenWhite-400">Mijn blogs</Link>
-                    <Link href="#" class="block px-4 py-2 hover:bg-giesenWhite-400">Mijn reacties</Link>
+                    <Link href="/mijnReacties" class="block px-4 py-2 hover:bg-giesenWhite-400">Mijn reacties</Link>
                     <Link href="/logout" method="post" class="block px-4 py-2 hover:bg-giesenWhite-400 rounded-b">
                         Uitloggen
                     </Link>

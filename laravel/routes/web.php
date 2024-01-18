@@ -27,6 +27,8 @@ Route::middleware('auth')->group(function () {
     Route::delete("/deleteComment/{id}", [ReactieController::class, 'destroy']);
     Route::get("/reactieBewerken/{id}", [ReactieController::class, 'edit']);
     Route::patch("/updateComment", [ReactieController::class, 'update']);
+
+    Route::get("/mijnReacties", [ReactieController::class, 'myComments']);
 });
 
 Route::get('/blogs', [BlogsController::class, 'index'])->name('blogs.index');

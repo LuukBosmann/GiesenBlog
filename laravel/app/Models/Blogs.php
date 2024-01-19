@@ -12,5 +12,6 @@ class blogs extends Model
     protected $fillable = [
         'titel',
         'inhoud',
+        'gebruikersId'
     ];
 }

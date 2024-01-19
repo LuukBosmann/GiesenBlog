@@ -25,14 +25,6 @@ class GebruikerController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -65,24 +57,16 @@ class GebruikerController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(User $gebruiker)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
-    public function edit(): Response
+    public function edit()
     {
         return Inertia::render('Profile/Edit/EditProfile', [
             'user' => User::find(Auth::user()->id),
         ]);
     }
 
-    public function editPassword(): Response
+    public function editPassword()
     {
         return Inertia::render('Profile/Edit/EditPassword', [
             'user' => User::find(Auth::user()->id),

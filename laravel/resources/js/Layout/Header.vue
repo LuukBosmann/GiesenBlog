@@ -31,7 +31,7 @@ const user = computed(() => page.props.auth.user);
             </div>
 
             <div @click="isOpen = !isOpen" v-else class="flex flex-1 justify-end gap-5 relative">
-                <img class="h-12 w-auto rounded-full" :src="`/storage/uploads/${user.profielFoto}`"
+                <img class="h-12 w-auto" :src="`/storage/uploads/${user.profielFoto}`"
                      alt="Profiel Foto">
                 <p class="font-semibold text-gray-900">{{ user.voornaam }} {{ user.achternaam }} <br>
                     <small>{{ user.email }}</small>
@@ -39,10 +39,10 @@ const user = computed(() => page.props.auth.user);
                 <Icon icon="mdi:chevron-down" width="25" class="mt-[1.0rem] -ml-[1rem]"/>
 
                 <div v-if="isOpen" id="dropdown"
-                     class="absolute -right-5 z-10 top-[4.5rem] w-56 rounded shadow-lg border border-giesenBlue">
+                     class="absolute bg-giesenWhite-100 -right-5 z-10 top-[4.5rem] w-56 rounded shadow-lg border border-giesenBlue">
                     <Link href="/profiel" class="block px-4 py-2 hover:bg-giesenWhite-400 rounded-t">Profiel</Link>
                     <Link href="/blogs" class="block px-4 py-2 hover:bg-giesenWhite-400">Mijn blogs</Link>
-                    <Link href="#" class="block px-4 py-2 hover:bg-giesenWhite-400">Mijn reacties</Link>
+                    <Link href="/mijnReacties" class="block px-4 py-2 hover:bg-giesenWhite-400">Mijn reacties</Link>
                     <Link href="/logout" method="post" class="block px-4 py-2 hover:bg-giesenWhite-400 rounded-b">
                         Uitloggen
                     </Link>

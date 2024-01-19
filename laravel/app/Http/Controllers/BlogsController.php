@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blogs;
+use App\Models\Reacties;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class BlogsController extends Controller
@@ -15,6 +18,7 @@ class BlogsController extends Controller
     {
         return Inertia::render('Blogs/Index', [
             'blogs' => Blogs::all(),
+            'users' => User::whereIn('id', Blogs::pluck('gebruikersId'))->get(),
         ]);
     }
 
@@ -37,10 +41,16 @@ class BlogsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(blogs $blogs)
+    public function show($id)
     {
+        $blog = Blogs::findorFail($id);
+
         return Inertia::render('Blogs/Show', [
-            'blog' => $blogs,
+            'blog' => $blog,
+            'user' => User::find($blog->gebruikersId),
+            'users' => User::all(),
+            'comments' => Reacties::where('blogId', $blog->id)->get(),
+            'loggedInUserId' => Auth::user() ? Auth::user()->id : null
         ]);
     }
 
@@ -49,10 +59,8 @@ class BlogsController extends Controller
      */
     public function edit($id)
     {
-        $blog = Blogs::findOrFail($id);
-
         return Inertia::render('Blogs/Edit', [
-            'blog' => $blog,
+            'blog' => Blogs::findOrFail($id),
         ]);
     }
 
@@ -72,14 +80,18 @@ class BlogsController extends Controller
         ]);
 
         return Inertia::location("/blogs");
-
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(blogs $blogs)
+    public function destroy(Blogs $blogs)
     {
         //
+    }
+
+    public function getUser($gebruikersId)
+    {
+        return User::find($gebruikersId);
     }
 }

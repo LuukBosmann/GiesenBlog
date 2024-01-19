@@ -14,10 +14,7 @@ const form = useForm({
 function updateBlog() {
   Inertia.post(window.location.href, form);
 }
-
 </script>
-
-
 
 <template>
   <div class="py-12">
@@ -51,19 +48,3 @@ function updateBlog() {
     </div>
   </div>
 </template>
-
-
-<script>
-
-export default {
-  props: {
-    blog: Object,
-  },
-  methods: {
-    saveChanges() {
-      // Handle saving changes to the blog post (you can use an API call here)
-      console.log("Changes saved:", this.blog);
-    },
-  },
-};
-</script>

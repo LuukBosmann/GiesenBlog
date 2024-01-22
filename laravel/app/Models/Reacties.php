@@ -10,7 +10,7 @@ class Reacties extends Model
     use HasFactory;
 
     protected $fillable = [
-        'blogId',
+        'blogs_id',
         'gebruikersId',
         'inhoud',
     ];

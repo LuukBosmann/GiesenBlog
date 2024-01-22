@@ -14,4 +14,9 @@ class Blogs extends Model
         'inhoud',
         'gebruikersId'
     ];
+
+    public function comments()
+    {
+        return $this->hasMany(Reacties::class);
+    }
 }

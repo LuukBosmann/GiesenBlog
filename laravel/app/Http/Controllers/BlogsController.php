@@ -52,9 +52,7 @@ class BlogsController extends Controller
         ]);
 
         // Render the view with the updated list of blogs
-        return Inertia::render('Blogs/Index', [
-            'blogs' => Blogs::all(),
-        ]);
+        return Inertia::location('/blogs');
     }
 
     /**
@@ -68,7 +66,7 @@ class BlogsController extends Controller
             'blog' => $blog,
             'user' => User::find($blog->gebruikersId),
             'users' => User::all(),
-            'comments' => Reacties::where('blogId', $blog->id)->get(),
+            'comments' => Reacties::where('blogs_id', $blog->id)->get(),
             'loggedInUserId' => Auth::user() ? Auth::user()->id : null
         ]);
     }
@@ -104,13 +102,29 @@ class BlogsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Blogs $blogs)
+    public function destroy($id)
     {
-        //
+        $blogs = Blogs::findOrFail($id);
+
+        // Delete the associated comments first (due to onDelete cascade)
+        $blogs->comments()->delete();
+
+        // Then delete the blog
+        $blogs->delete();
+
+        return Inertia::location("/blogs");
     }
 
     public function getUser($gebruikersId)
     {
         return User::find($gebruikersId);
+    }
+
+    public function myBlogs()
+    {
+        return Inertia::render("Profile/MijnBlogs", [
+            'blogs' => Blogs::where('gebruikersId', Auth::user() ? Auth::user()->id : null)->get(),
+            'user' => Auth::user() ? Auth::user() : null
+        ]);
     }
 }

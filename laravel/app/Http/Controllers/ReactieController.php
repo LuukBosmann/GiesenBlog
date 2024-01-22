@@ -32,17 +32,17 @@ class ReactieController extends Controller
     {
         $request->validate([
             'inhoud' => 'required|string',
-            'blogId' => 'required|integer',
+            'blogs_id' => 'required|integer',
             'gebruikersId' => 'required|integer',
         ]);
 
         Reacties::create([
             'inhoud' => $request->inhoud,
-            'blogId' => $request->blogId,
+            'blogs_id' => $request->blogs_id,
             'gebruikersId' => $request->gebruikersId,
         ]);
 
-        return Inertia::location("/blogs/$request->blogId");
+        return Inertia::location("/blogs/$request->blogs_id");
     }
 
     /**
@@ -77,7 +77,7 @@ class ReactieController extends Controller
         $reactie->inhoud = $request->inhoud;
         $reactie->save();
 
-        return Inertia::location("/blogs/$reactie->blogId");
+        return Inertia::location("/blogs/$reactie->blogs_id");
     }
 
     /**

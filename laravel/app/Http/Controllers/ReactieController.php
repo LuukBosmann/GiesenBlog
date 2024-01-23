@@ -10,22 +10,6 @@ use Inertia\Inertia;
 class ReactieController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -43,14 +27,6 @@ class ReactieController extends Controller
         ]);
 
         return Inertia::location("/blogs/$request->blogs_id");
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show()
-    {
-
     }
 
     /**
@@ -90,7 +66,7 @@ class ReactieController extends Controller
 
     public function myComments()
     {
-        return Inertia::render("Profile/MijnReacties", [
+        return Inertia::render("Profile/MyComments", [
             'comments' => Reacties::where('gebruikersId', Auth::user() ? Auth::user()->id : null)->get(),
             'user' => Auth::user() ? Auth::user() : null
         ]);

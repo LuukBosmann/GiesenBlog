@@ -1,6 +1,5 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
-import { Icon } from "@iconify/vue";
 import { formatDate } from "@/helperfunctions.js";
 
 const props = defineProps(['comments', 'user']);
@@ -26,12 +25,12 @@ const props = defineProps(['comments', 'user']);
                             <p>Updated at: {{ formatDate(comment.updated_at) }}</p>
                         </div>
                         <div v-if="props.loggedInUserId && comment.gebruikersId === props.loggedInUserId"
-                            class="flex space-x-2">
-                            <Link :href="`/reactieBewerken/${comment.id}`" class="text-blue-500">
-                            <i class="fas fa-edit"></i> Edit
+                                class="flex space-x-2">
+                            <Link :href="`/editComment/${comment.id}`" class="text-blue-500">
+                                <i class="fas fa-edit"></i> Edit
                             </Link>
                             <Link :href="`/deleteComment/${comment.id}`" method="delete" class="text-red-500" as="button">
-                            <i class="fas fa-trash"></i> Delete
+                                <i class="fas fa-trash"></i> Delete
                             </Link>
                         </div>
                     </div>
@@ -40,5 +39,3 @@ const props = defineProps(['comments', 'user']);
         </div>
     </div>
 </template>
-
-<style scoped></style>

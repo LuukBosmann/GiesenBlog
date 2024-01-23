@@ -10,11 +10,10 @@ let form = useForm({
 
 let submit = () => {
     if(form.nieuwWachtwoord !== validator) {
-        console.log("Wachtwoorden komen niet overeen");
         return;
     }
 
-    form.patch(`/wachtwoordwijzigen`);
+    form.patch(`/editPassword`);
 };
 
 let validator;

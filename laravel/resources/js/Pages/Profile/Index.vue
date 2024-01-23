@@ -1,12 +1,12 @@
 <script setup>
-import { Head, Link } from "@inertiajs/vue3";
-import { formatDate } from "@/helperfunctions.js";
+import {Head, Link} from "@inertiajs/vue3";
+import {formatDate} from "@/helperfunctions.js";
 
 const props = defineProps(['user', 'profielFoto']);
 </script>
 
 <template>
-    <Head title="Profiel" />
+    <Head title="Profile"/>
     <div class="w-1/2 shadow-md rounded-md grid grid-cols-2 gap-4 bg-giesenBlue mx-auto">
         <div class="p-5">
             <h2 class="text-2xl font-semibold text-center">Profile</h2>
@@ -31,13 +31,13 @@ const props = defineProps(['user', 'profielFoto']);
                 <span>{{ formatDate(props.user['updated_at']) }}</span>
             </div>
             <div class="mt-8 flex flex-col gap-4">
-                <Link href="/profielwijzigen"
-                    class="bg-giesenDarkBlue rounded py-1.5 hover:bg-giesenBlack text-center shadow-md">
-                Edit profile
+                <Link href="/editProfile"
+                      class="bg-giesenDarkBlue rounded py-1.5 hover:bg-giesenBlack text-center shadow-md">
+                    Edit profile
                 </Link>
                 <Link class="bg-giesenDarkBlue rounded py-1.5 hover:bg-giesenBlack text-center shadow-md"
-                    href="/wachtwoordwijzigen">
-                Change password
+                      href="/editPassword">
+                    Edit password
                 </Link>
             </div>
         </div>

@@ -1,10 +1,7 @@
 <script setup>
-import { Head, Link, useForm, router } from '@inertiajs/vue3';
-import { Inertia } from "@inertiajs/inertia";
+import { Head, Link, useForm } from '@inertiajs/vue3';
 
-const props = defineProps({
-  blog: Object,
-});
+const props = defineProps(['blog']);
 
 const form = useForm({
   titel: props.blog.titel,
@@ -12,11 +9,12 @@ const form = useForm({
 });
 
 function updateBlog() {
-  Inertia.post(window.location.href, form);
+  form.post(`/blogs/${props.blog.id}/edit`);
 }
 </script>
 
 <template>
+  <Head title="Edit Blog"/>
   <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
       <div class="flex m-2 p-2">
@@ -38,7 +36,7 @@ function updateBlog() {
             <label for="content" class="block mt-4 text-lg font-medium text-giesenBlack mb-1">Content</label>
             <div class="mt-2">
               <textarea id="content" name="content" v-model="form.inhoud" rows="6"
-                class="shadow-lg bg-giesenWhite-100 focus:ring-giesenBlue focus:border-giesenBlue mt-1 block w-full sm:text-sm border-giesenWhite-300 rounded-md p-2 h-52"></textarea>
+                class="shadow-lg bg-giesenWhite-100 focus:ring-giesenBlue focus:border-giesenBlue mt-1 block w-full sm:text-sm border-giesenWhite-300 rounded-md p-2 h-52"/>
             </div>
           </div>
           <div class="m-2 p-2">

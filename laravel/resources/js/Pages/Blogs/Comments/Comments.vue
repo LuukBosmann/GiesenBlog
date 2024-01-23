@@ -1,7 +1,6 @@
 <script setup>
-import { Link, useForm } from "@inertiajs/vue3";
-import { Icon } from "@iconify/vue";
-import { findUser, formatDate } from "@/helperfunctions.js";
+import {Link, useForm} from "@inertiajs/vue3";
+import {findUser, formatDate} from "@/helperfunctions.js";
 
 const props = defineProps(['blog', 'loggedInUserId', 'comments', 'users'])
 
@@ -37,30 +36,31 @@ function storeComment() {
                             <p>Bijgewerkt: {{ formatDate(comment.updated_at) }}</p>
                         </div>
                         <div v-if="props.loggedInUserId && comment.gebruikersId === props.loggedInUserId"
-                            class="flex space-x-2">
-                            <Link :href="`/reactieBewerken/${comment.id}`" class="text-blue-500">
-                            <i class="fas fa-edit"></i> Edit
+                             class="flex space-x-2">
+                            <Link :href="`/editComment/${comment.id}`" class="text-blue-500">
+                                <i class="fas fa-edit"></i> Edit
                             </Link>
-                            <Link :href="`/deleteComment/${comment.id}`" method="delete" class="text-red-500" as="button">
-                            <i class="fas fa-trash"></i> Delete
+                            <Link :href="`/deleteComment/${comment.id}`" method="delete" class="text-red-500"
+                                  as="button">
+                                <i class="fas fa-trash"></i> Delete
                             </Link>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
+
     <div v-if="props.loggedInUserId"
-        class="flex justify-center flex-col items-center mb-5 border-t-[5px] border-giesenWhite-200">
+         class="flex justify-center flex-col items-center mb-5 border-t-[5px] border-giesenWhite-200">
         <h1 class="text-lg py-3">Write a comment</h1>
         <form @submit.prevent="storeComment" class="flex flex-col items-center w-4/6">
             <textarea name="content" id="content" v-model="form.inhoud"
-                class="bg-giesenWhite-200 shadow-md rounded-md p-4 w-full focus:outline-none focus:ring focus:border-giesenWhite-300"
-                maxlength="255" rows="4"></textarea>
+                      class="bg-giesenWhite-200 shadow-md rounded-md p-4 w-full focus:outline-none focus:ring focus:border-giesenWhite-300"
+                      maxlength="255" rows="4"></textarea>
 
             <button type="submit"
-                class="my-2 inline-block bg-giesenWhite-200 text-giesenBlack drop-shadow-md rounded-full py-2 px-6 transition duration-300 ease-in-out transform hover:bg-blue-700 hover:scale-105 focus:outline-none focus:ring focus:border-blue-300">
+                    class="my-2 inline-block bg-giesenWhite-200 text-giesenBlack drop-shadow-md rounded-full py-2 px-6 transition duration-300 ease-in-out transform hover:bg-blue-700 hover:scale-105 focus:outline-none focus:ring focus:border-blue-300">
                 Comment
             </button>
         </form>
@@ -71,5 +71,3 @@ function storeComment() {
         <Link href="/login" class="font-semibold hover:underline">Login</Link>
     </div>
 </template>
-
-<style scoped></style>

@@ -27,7 +27,7 @@ const props = defineProps(['blogs', 'user']);
                         <div class="mt-2 p-2">
                             <Link :href="`/blogs/${blog.id}`"
                                 class="inline-block bg-giesenWhite-200 text-giesenBlack drop-shadow-md rounded-full py-2 px-6 transition duration-300 ease-in-out transform hover:bg-blue-700 hover:scale-105 focus:outline-none focus:ring focus:border-blue-300">
-                            Lees meer...
+                            Read more...
                             </Link>
                         </div>
                     </div>

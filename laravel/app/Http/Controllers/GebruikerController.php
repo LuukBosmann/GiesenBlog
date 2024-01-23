@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
-use Inertia\Response;
 
 class GebruikerController extends Controller
 {
@@ -92,7 +91,7 @@ class GebruikerController extends Controller
 
         $gebruiker->save();
 
-        return Inertia::location("/profiel");
+        return Inertia::location("/profile");
     }
 
     public function updatePassword(Request $request)
@@ -112,14 +111,6 @@ class GebruikerController extends Controller
 
         $gebruiker->save();
 
-        return Inertia::location("/profiel");
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $gebruiker)
-    {
-        //
+        return Inertia::location("/profile");
     }
 }

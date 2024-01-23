@@ -122,7 +122,7 @@ class BlogsController extends Controller
 
     public function myBlogs()
     {
-        return Inertia::render("Profile/MijnBlogs", [
+        return Inertia::render("Profile/MyBlogs", [
             'blogs' => Blogs::where('gebruikersId', Auth::user() ? Auth::user()->id : null)->get(),
             'user' => Auth::user() ? Auth::user() : null
         ]);

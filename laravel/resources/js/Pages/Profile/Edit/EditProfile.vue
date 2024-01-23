@@ -6,7 +6,7 @@ const props = defineProps(['user']);
 let form = useForm(props.user);
 
 let submit = () => {
-    form.patch(`/profielwijzigen`);
+    form.patch(`/editProfile`);
 };
 </script>
 

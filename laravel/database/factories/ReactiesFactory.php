@@ -23,7 +23,7 @@ class ReactiesFactory extends Factory
 
         return [
             'gebruikersId' => $this->faker->randomElement($users)->id,
-            'blogId' => $this->faker->randomElement($blogs)->id,
+            'blogs_id' => $this->faker->randomElement($blogs)->id,
             'inhoud' => $this->faker->paragraphs(3, true),
         ];
     }

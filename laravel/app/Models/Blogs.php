@@ -12,5 +12,11 @@ class Blogs extends Model
     protected $fillable = [
         'titel',
         'inhoud',
+        'gebruikersId'
     ];
+
+    public function comments()
+    {
+        return $this->hasMany(Reacties::class);
+    }
 }

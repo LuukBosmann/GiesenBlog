@@ -1,6 +1,6 @@
 <script setup>
-import {Head, Link} from '@inertiajs/vue3';
-import {formatDate, truncateText} from "@/helperfunctions.js";
+import { Head, Link } from '@inertiajs/vue3';
+import { formatDate, truncateText } from "@/helperfunctions.js";
 import Comments from "@/Pages/Blogs/Comments/Comments.vue";
 
 const props = defineProps(['blog', 'user', 'users', 'comments', 'loggedInUserId']);
@@ -11,29 +11,30 @@ let users = props.users;
 </script>
 
 <template>
-    <Head :title="`Blogs | ${truncateText(props.blog.titel, 25)}`"/>
+    <Head :title="`Blogs | ${truncateText(props.blog.titel, 25)}`" />
     <div class="pb-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="flex m-2 p-2">
                 <Link href="/blogs" class="px-4 py-2 bg-indigo-500 hover:bg-indico-600 text-white rounded">Back</Link>
             </div>
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg mb-5 relative">
-                <div class="absolute right-0 mt-2" v-if="props.loggedInUserId && props.blog.gebruikersId === props.loggedInUserId">
+                <div class="absolute right-0 mt-2"
+                    v-if="props.loggedInUserId && props.blog.gebruikersId === props.loggedInUserId">
                     <Link :href="`/blogs/${props.blog.id}`" method="delete" as="button"
-                          class="float-right mr-3 inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700  sm:ml-3 sm:w-auto sm:text-sm">
-                        Delete
+                        class="float-right mx-2 inline-block bg-giesenWhite-200 text-giesenBlack drop-shadow-md rounded-full py-2 px-6 transition duration-300 ease-in-out transform hover:bg-blue-700 hover:scale-105 focus:outline-none focus:ring focus:border-blue-300">
+                    Delete
                     </Link>
                     <Link :href="`/blogs/${props.blog.id}/edit`"
-                          class="float-right inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700  sm:ml-3 sm:w-auto sm:text-sm">
-                        Edit
+                        class="float-right mx-2 inline-block bg-giesenWhite-200 text-giesenBlack drop-shadow-md rounded-full py-2 px-6 transition duration-300 ease-in-out transform hover:bg-blue-700 hover:scale-105 focus:outline-none focus:ring focus:border-blue-300">
+                    Edit
                     </Link>
                 </div>
                 <div class="container mx-auto flex flex-wrap">
                     <div class="w-full md:w-1/2 flex flex-col flex-grow flex-shrink">
-                        <div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow">
+                        <div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden">
                             <div class="w-full flex flex-col items-center">
                                 <p class="w-10/12 text-gray-600 text-sm md:text-base">
-                                    Geplaatst door {{ user.voornaam }} {{ user.achternaam }} op
+                                    Posted by {{ user.voornaam }} {{ user.achternaam }} on
                                     {{ formatDate(props.blog.aangemaakt) }}
                                 </p>
                                 <div class="w-10/12 font-bold text-3xl text-gray-900 mb-6">{{ props.blog.titel }}</div>
@@ -46,9 +47,9 @@ let users = props.users;
                         </div>
                     </div>
                 </div>
-                <hr>
-                <Comments :blog="props.blog" :loggedInUserId="props.loggedInUserId"
-                          :comments="props.comments" :users="props.users"/>
+
+                <Comments :blog="props.blog" :loggedInUserId="props.loggedInUserId" :comments="props.comments"
+                    :users="props.users" />
             </div>
         </div>
     </div>

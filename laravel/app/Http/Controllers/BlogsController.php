@@ -27,7 +27,9 @@ class BlogsController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Blogs/Create');
+        return Inertia::render('Blogs/Create', [
+            'user' => Auth::user()
+        ]);
     }
 
     /**
@@ -35,7 +37,22 @@ class BlogsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate the incoming request data
+        $request->validate([
+            'titel' => 'required',
+            'inhoud' => 'required',
+            'gebruikersId' => 'required',
+        ]);
+
+        // Create a new Blogs entry using the form data
+        Blogs::create([
+            'titel' => $request->titel,
+            'inhoud' => $request->inhoud,
+            'gebruikersId' => $request->gebruikersId,
+        ]);
+
+        // Render the view with the updated list of blogs
+        return Inertia::location('/blogs');
     }
 
     /**
@@ -49,7 +66,7 @@ class BlogsController extends Controller
             'blog' => $blog,
             'user' => User::find($blog->gebruikersId),
             'users' => User::all(),
-            'comments' => Reacties::where('blogId', $blog->id)->get(),
+            'comments' => Reacties::where('blogs_id', $blog->id)->get(),
             'loggedInUserId' => Auth::user() ? Auth::user()->id : null
         ]);
     }
@@ -85,13 +102,29 @@ class BlogsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Blogs $blogs)
+    public function destroy($id)
     {
-        //
+        $blogs = Blogs::findOrFail($id);
+
+        // Delete the associated comments first (due to onDelete cascade)
+        $blogs->comments()->delete();
+
+        // Then delete the blog
+        $blogs->delete();
+
+        return Inertia::location("/blogs");
     }
 
     public function getUser($gebruikersId)
     {
         return User::find($gebruikersId);
+    }
+
+    public function myBlogs()
+    {
+        return Inertia::render("Profile/MijnBlogs", [
+            'blogs' => Blogs::where('gebruikersId', Auth::user() ? Auth::user()->id : null)->get(),
+            'user' => Auth::user() ? Auth::user() : null
+        ]);
     }
 }
